@@ -22,6 +22,17 @@ orderRoute.get('/:id', async (req, res) => {
     }
 })
 
+orderRoute.get('/my/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        let orders = await Order.find()
+        orders = orders.filter(o => o.livror.id == id)
+        res.send({ good: true, result: orders, length: orders.length })
+    } catch (error) {
+        res.send({ error: error, good: false })
+    }
+})
+
 orderRoute.get('/all', async (req, res) => {
     try {
         const orders = await Order.find()
